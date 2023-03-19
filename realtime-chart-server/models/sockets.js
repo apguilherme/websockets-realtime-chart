@@ -16,7 +16,7 @@ class Sockets {
             socket.emit('current-items', { 'msg': 'current items', 'list': this.itemList, 'timestamp': new Date().toISOString() });
 
             socket.on('add-item', (item) => {
-                console.log('>> item received:', item);
+                console.log('>> add-item:', item);
                 this.itemList.addItem(item);
                 this.io.emit('current-items', { 'msg': 'current items', 'list': this.itemList, 'timestamp': new Date().toISOString() });
             });
