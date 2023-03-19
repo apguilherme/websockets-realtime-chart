@@ -1,12 +1,17 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import { SocketContext } from '../context/SocketContext';
 
-export const ItemList = ({ currentItems, plusValue, minusValue, updateName, removeItem }) => {
+export const ItemList = () => {
 
-    const [items, setItems] = useState(currentItems);
+    const [items, setItems] = useState([]);
+    const { socket } = useContext(SocketContext);
 
     useEffect(() => {
-        setItems(currentItems);
-    }, [currentItems])
+        socket.on('current-items', (data) => {
+            setItems(data.list.items);
+        })
+        return () => socket.off('current-items')
+    }, [socket])
 
     const handleNameChange = (itemTarget, name) => {
         setItems(items => items.map(item => {
@@ -24,24 +29,24 @@ export const ItemList = ({ currentItems, plusValue, minusValue, updateName, remo
                             className='form-control'
                             value={item.name}
                             onChange={(e) => handleNameChange(item, e.target.value)}
-                            onBlur={() => updateName(item)}
+                            onBlur={() => socket.emit('update-name', item)}
                         />
                     </td>
                     <td>
                         <button
                             className='btn btn-primary'
-                            onClick={(e) => plusValue(item.id)}
+                            onClick={() => socket.emit('increase-value', item.id)}
                         >+</button>
                         {item.value}
                         <button
                             className='btn btn-secondary'
-                            onClick={(e) => minusValue(item.id)}
+                            onClick={() => socket.emit('decrease-value', item.id)}
                         >-</button>
                     </td>
                     <td>
                         <button
                             className='btn btn-danger'
-                            onClick={(e) => removeItem(item.id)}
+                            onClick={() => socket.emit('remove-item', item.id)}
                         >Remove</button>
                     </td>
                 </tr>

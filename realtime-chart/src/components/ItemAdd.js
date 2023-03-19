@@ -1,13 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import {SocketContext} from '../context/SocketContext';
 
 export const ItemAdd = ({ addItem }) => {
 
     const [name, setName] = useState('');
+    const { socket } = useContext(SocketContext);
 
     const addHandler = (e) => {
         e.preventDefault();
         if (name !== "") {
-            addItem(name);
+            socket.emit('add-item', name);
             setName('');
         }
     }
