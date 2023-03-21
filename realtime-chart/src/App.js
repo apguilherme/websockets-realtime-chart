@@ -2,6 +2,7 @@ import { ItemAdd } from './components/ItemAdd'
 import { ItemList } from './components/ItemList'
 import React, { useContext } from 'react'
 import { SocketContext } from './context/SocketContext';
+import { ChartRealTime } from './components/ChartRealTime';
 
 function App() {
 
@@ -17,6 +18,11 @@ function App() {
       </div>
       <h1>Realtime Chart</h1>
       <hr />
+      <div className='row'>
+        <div className='col'>
+          <ChartRealTime />
+        </div>
+      </div>
       <div className="row">
         <div className="col-8">
           <ItemList />
