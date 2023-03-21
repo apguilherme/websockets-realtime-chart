@@ -10,6 +10,8 @@ Frontend: run `cd realtime-chart`, `npm i` and `npm run start`
 
 Access `http://localhost:8080/` on more than one browser.
 
+![Screenshot](chart.png)
+
 ---
 ```
 Credits - developed based on Udemy Course: 
